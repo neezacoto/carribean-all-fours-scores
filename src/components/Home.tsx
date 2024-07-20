@@ -68,7 +68,7 @@ function Home() {
           alignItems="center"
           justifyContent="center"
         >
-          {screen === "divisions" && <Divisions />}
+          {screen === "divisions" && <Divisions tournament={tournament} />}
           {screen === "games" && <Games />}
         </Grid>
         <Grid item xs={1} style={styles.navContainer}>

@@ -62,7 +62,7 @@ type TeamEntry = {
   }
   
   type Round = 1 | 2 | 3;
-  class Tournement {
+  export class Tournament {
     roundOne: Game[];
     roundTwo: Game[];
     roundThree: Game[];
@@ -74,8 +74,8 @@ type TeamEntry = {
       this.divisions = [];
     }
   
-    public addDivision(name: string) {
-      this.divisions.push(new Division(name));
+    public addDivision(division: Division) {
+      this.divisions.push(division);
     }
   
     public getDivisions() {
@@ -102,7 +102,7 @@ type TeamEntry = {
   }
 
   export function setup() {
-    const tournament = new Tournement();
+    const tournament = new Tournament();
   
     const addTeamsToDivision = (division: Division, enumObject: any) => {
       Object.values(enumObject).forEach((teamName) => {
@@ -121,7 +121,7 @@ type TeamEntry = {
     divisionsAndTeams.forEach(({ name, enumObject }) => {
       const division = new Division(name);
       addTeamsToDivision(division, enumObject);
-      tournament.addDivision(division.name);
+      tournament.addDivision(division);
     });
 
     //Games
