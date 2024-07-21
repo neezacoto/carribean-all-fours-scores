@@ -5,7 +5,7 @@ import MuiAccordionSummary, {
   AccordionSummaryProps,
 } from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
-import { Typography, Paper, Box, Button } from "@mui/material";
+import { Typography, Paper, Box, Button, Divider } from "@mui/material";
 import { ExpandMore } from "@mui/icons-material";
 import { Tournament } from "../util/allFoursGame";
 
@@ -100,21 +100,43 @@ function Games({ tournament }: GamesProps) {
               {round.length > 0 ? (
                 round.map((game, gameIndex) => (
                   <GamePaper key={`${roundIndex}-${gameIndex}`}>
-                    <Typography variant="h6">
-                      {game.teamA.team.name} vs {game.teamB.team.name}
+                    <Typography variant="h6" component="div" gutterBottom>
+                      <Box fontWeight="fontWeightBold">
+                        {game.teamA.team.name} vs {game.teamB.team.name}
+                      </Box>
                     </Typography>
-                    <Typography variant="body2">Start: {game.start}</Typography>
-                    <Typography variant="body2">End: {game.end}</Typography>
-                    <Typography variant="body2">
-                      {game.teamA.team.name} - BullsEye Wins:{" "}
-                      {game.teamA.team.bullsEyeWins}, BullsEye Losses:{" "}
-                      {game.teamA.team.bullsEyeLosses}
+                    <Divider />
+                    <Typography variant="body1" style={{ marginTop: ".5rem" }}>
+                      <Box fontWeight="fontWeightBold" display="inline">
+                        {game.teamA.team.name}
+                      </Box>
+                      <Typography>Bulls Eye: {game.teamA.bullsEye}</Typography>
+                      <Typography>
+                        Hang Jacks: {game.teamA.hangJacks}
+                      </Typography>
                     </Typography>
-                    <Typography variant="body2">
-                      {game.teamB.team.name} - BullsEye Wins:{" "}
-                      {game.teamB.team.bullsEyeWins}, BullsEye Losses:{" "}
-                      {game.teamB.team.bullsEyeLosses}
+                    <Typography style={{ marginTop: ".5rem" }} variant="body1">
+                      <Box fontWeight="fontWeightBold" display="inline">
+                        {game.teamB.team.name}
+                      </Box>
+                      <Typography>Bulls Eye: {game.teamB.bullsEye}</Typography>
+                      <Typography>
+                        Hang Jacks: {game.teamB.hangJacks}{" "}
+                      </Typography>
                     </Typography>
+                    <Box
+                      style={{
+                        display: "flex",
+                        gap: "1rem",
+                        color: "lightgray",
+                        marginTop: "1rem",
+                      }}
+                    >
+                      <Typography variant="body2">
+                        Start: {game.start}
+                      </Typography>
+                      <Typography variant="body2">End: {game.end}</Typography>
+                    </Box>
                   </GamePaper>
                 ))
               ) : (

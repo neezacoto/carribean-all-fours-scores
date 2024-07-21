@@ -2,137 +2,154 @@ type TeamEntry = {
     team: Team;
     bullsEye: number;
     hangJacks: number;
-  };
-  
-  export class Game {
+};
+
+export class Game {
     teamA: TeamEntry;
     teamB: TeamEntry;
     start: string;
     end: string;
     constructor(teamA: TeamEntry, teamB: TeamEntry, start: string, end: string) {
-      this.teamA = teamA;
-      this.teamB = teamB;
-      this.start = start;
-      this.end = end;
-  
-      teamA.team.addBullsEyes(teamA.bullsEye, teamB.bullsEye);
-      teamA.team.addHangJacks(teamA.hangJacks, teamB.hangJacks);
+        this.teamA = teamA;
+        this.teamB = teamB;
+        this.start = start;
+        this.end = end;
+
+        teamA.team.addBullsEyes(teamA.bullsEye, teamB.bullsEye);
+        teamA.team.addHangJacks(teamA.hangJacks, teamB.hangJacks);
+
+        teamB.team.addBullsEyes(teamB.bullsEye, teamA.bullsEye);
+        teamB.team.addHangJacks(teamB.hangJacks, teamA.hangJacks);
     }
-  }
-  
-  class Team {
+}
+
+class Team {
     name: string;
     bullsEyeWins: number;
     bullsEyeLosses: number;
     hangJackWins: number;
     hangJackLosses: number;
-  
+
     constructor(name: string) {
-      // Initialize properties here
-      this.name = name;
-      this.bullsEyeWins = 0;
-      this.bullsEyeLosses = 0;
-      this.hangJackWins = 0;
-      this.hangJackLosses = 0;
+        // Initialize properties here
+        this.name = name;
+        this.bullsEyeWins = 0;
+        this.bullsEyeLosses = 0;
+        this.hangJackWins = 0;
+        this.hangJackLosses = 0;
     }
-  
+
     public addBullsEyes(won: number, lost: number) {
-      this.bullsEyeWins += won;
-      this.bullsEyeLosses += lost;
+        this.bullsEyeWins += won;
+        this.bullsEyeLosses += lost;
     }
-  
+
     public addHangJacks(won: number, lost: number) {
-      this.hangJackWins += won;
-      this.hangJackLosses += lost;
+        this.hangJackWins += won;
+        this.hangJackLosses += lost;
     }
-  }
-  
-  class Division {
+}
+
+class Division {
     name: string;
     teams: Team[];
-  
+
     constructor(name: string) {
-      this.name = name;
-      this.teams = [];
+        this.name = name;
+        this.teams = [];
     }
-  
+
     public addTeam(team: Team) {
-      this.teams.push(team);
+        this.teams.push(team);
     }
-  }
-  
-  type Round = 1 | 2 | 3;
-  export class Tournament {
+}
+
+type Round = 1 | 2 | 3;
+
+export class Tournament {
     roundOne: Game[];
     roundTwo: Game[];
     roundThree: Game[];
     divisions: Division[];
+
     constructor() {
-      this.roundOne = [];
-      this.roundTwo = [];
-      this.roundThree = [];
-      this.divisions = [];
+        this.roundOne = [];
+        this.roundTwo = [];
+        this.roundThree = [];
+        this.divisions = [];
     }
-  
+
     public addDivision(division: Division) {
-      this.divisions.push(division);
+        this.divisions.push(division);
     }
-  
+
     public getDivisions() {
-      return this.divisions;
+        return this.divisions;
     }
-  
+
     public getGames() {
-      return [this.roundOne, this.roundTwo, this.roundThree];
+        return [this.roundOne, this.roundTwo, this.roundThree];
     }
-  
-    private addGameToRound(round: Round, game: Game) {
-      switch (round) {
-        case 1:
-          this.roundOne.push(game);
-          break;
-        case 2:
-          this.roundTwo.push(game);
-          break;
-        case 3:
-          this.roundThree.push(game);
-          break;
-      }
+
+    public findDivision(name: string): Division | undefined {
+        return this.divisions.find(division => division.name === name);
     }
-  }
 
-  export function setup() {
-    const tournament = new Tournament();
-  
-    const addTeamsToDivision = (division: Division, enumObject: any) => {
-      Object.values(enumObject).forEach((teamName) => {
-        division.addTeam(new Team(teamName as string));
-      });
-    };
-  
-    const divisionsAndTeams = [
-      { name: "St. Louis", enumObject: StLouis },
-      { name: "Lewis", enumObject: Lewis },
-      { name: "Jones", enumObject: Jones },
-      { name: "Gibbs", enumObject: Gibbs },
-      { name: "Philip", enumObject: Philip },
-    ];
-  
-    divisionsAndTeams.forEach(({ name, enumObject }) => {
-      const division = new Division(name);
-      addTeamsToDivision(division, enumObject);
-      tournament.addDivision(division);
-    });
+    public findTeam(teamName: string): Team | undefined {
+        for (const division of this.divisions) {
+            const team = division.teams.find(team => team.name === teamName);
+            if (team) {
+                return team;
+            }
+        }
+        return undefined;
+    }
 
-    //Games
-  
-    return tournament;
-  }
+    public addGameToRound(
+        round: Round,
+        teamAName: string,
+        teamABullsEye: number,
+        teamAHangJacks: number,
+        teamBName: string,
+        teamBBullsEye: number,
+        teamBHangJacks: number,
+        start: string,
+        end: string
+    ) {
+        const teamA = this.findTeam(teamAName);
+        const teamB = this.findTeam(teamBName);
+        console.log(teamAName)
+        console.log({teamA}, {teamB})
+        if (teamA && teamB) {
+            const game = new Game(
+                { team: teamA, bullsEye: teamABullsEye, hangJacks: teamAHangJacks },
+                { team: teamB, bullsEye: teamBBullsEye, hangJacks: teamBHangJacks },
+                start,
+                end
+            );
+
+            switch (round) {
+                case 1:
+                    this.roundOne.push(game);
+                    break;
+                case 2:
+                    this.roundTwo.push(game);
+                    break;
+                case 3:
+                    this.roundThree.push(game);
+                    break;
+            }
+        } else {
+            console.error("One or both teams not found.");
+        }
+    }
+}
+
   
   
 
   type Divisions = StLouis | Lewis | Jones | Gibbs | Philip;
-
+  
   enum StLouis {
     STRIKERS = "STRIKERS",
     GUYANA = "GUYANA",
@@ -165,3 +182,63 @@ type TeamEntry = {
     UNITY = "UNITY",
     MONTREAL = "MONTREAL",
   }
+
+
+  const allEnums = [StLouis, Lewis, Jones, Gibbs, Philip];
+
+  const divisions = allEnums.reduce((acc, currentEnum) => {
+      Object.keys(currentEnum).forEach(key => {
+          acc[key] = (currentEnum as any)[key];
+      });
+      return acc;
+  }, {} as Record<string, string>);
+
+  export function setup() {
+    const tournament = new Tournament();
+
+    const addTeamsToDivision = (division: Division, enumObject: any) => {
+        Object.values(enumObject).forEach((teamName) => {
+            division.addTeam(new Team(teamName as string));
+        });
+    };
+
+    const divisionsAndTeams = [
+        { name: "St. Louis", enumObject: StLouis },
+        { name: "Lewis", enumObject: Lewis },
+        { name: "Jones", enumObject: Jones },
+        { name: "Gibbs", enumObject: Gibbs },
+        { name: "Philip", enumObject: Philip },
+    ];
+
+    divisionsAndTeams.forEach(({ name, enumObject }) => {
+        const division = new Division(name);
+        addTeamsToDivision(division, enumObject);
+        tournament.addDivision(division);
+    });
+
+    // Add games to round 1
+    tournament.addGameToRound(
+        1,
+        divisions.JUST_FOR_YOU,
+        17,
+        5,
+        divisions.CARIB,
+        15,
+        4,
+        "11:05AM",
+        "1:35PM"
+    );
+    tournament.addGameToRound(
+        1,
+        divisions.AIR_FORCE_ONE,
+        17,
+        7,
+        divisions.NEW_JERSEY_UNITED,
+        15,
+        4,
+        "11:05AM",
+        "1:35PM"
+    );
+
+    return tournament;
+}
