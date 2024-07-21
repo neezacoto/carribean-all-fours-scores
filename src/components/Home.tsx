@@ -47,6 +47,7 @@ function Home() {
     const tournamentSetup = setup();
     setTournament(tournamentSetup);
     console.log("Tournament setup:", tournamentSetup);
+    console.log("Tournament setup:", tournamentSetup.getTopTeamsByBullsEye());
     setLoading(false); // Set loading to false after setup is complete
   }, []);
 

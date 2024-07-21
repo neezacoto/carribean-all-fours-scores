@@ -6,9 +6,10 @@ import MuiAccordionSummary, {
 } from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
-import { ExpandMore } from "@mui/icons-material";
-import { Tournament } from "../util/allFoursGame";
 import { Box, Divider, Paper } from "@mui/material";
+import { ExpandMore } from "@mui/icons-material";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { Tournament } from "../util/allFoursGame";
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion {...props} />
@@ -49,6 +50,15 @@ type DivisionsProps = {
   tournament: Tournament;
 };
 
+const columns: GridColDef[] = [
+  { field: "id", headerName: "Rank", width: 70 },
+  { field: "name", headerName: "Team Name", width: 150 },
+  { field: "bullsEyeWins", headerName: "Bulls Eye Wins", width: 130 },
+  { field: "hangJackWins", headerName: "Hang Jack Wins", width: 130 },
+  { field: "bullsEyeLosses", headerName: "Bulls Eye Losses", width: 130 },
+  { field: "hangJackLosses", headerName: "Hang Jack Losses", width: 130 },
+];
+
 function Divisions({ tournament }: DivisionsProps) {
   const [expanded, setExpanded] = React.useState<{
     [key: string]: boolean;
@@ -62,8 +72,23 @@ function Divisions({ tournament }: DivisionsProps) {
       }));
     };
 
+  const topTeams = tournament.getTopTeamsByBullsEye().map((team, index) => ({
+    id: index + 1,
+    name: team.name,
+    bullsEyeWins: team.bullsEyeWins,
+    hangJackWins: team.hangJackWins,
+    bullsEyeLosses: team.bullsEyeLosses,
+    hangJackLosses: team.hangJackLosses,
+  }));
+
   return (
     <div>
+      <Box sx={{ height: 400, width: "100%", marginBottom: 4 }}>
+        <Typography variant="h5" sx={{ marginBottom: 2 }}>
+          Top 16 Teams
+        </Typography>
+        <DataGrid rows={topTeams} columns={columns} hideFooter />
+      </Box>
       {tournament.divisions.map((division, index) => (
         <Accordion
           key={division.name}

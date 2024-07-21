@@ -91,10 +91,6 @@ export class Tournament {
         return [this.roundOne, this.roundTwo, this.roundThree];
     }
 
-    public findDivision(name: string): Division | undefined {
-        return this.divisions.find(division => division.name === name);
-    }
-
     public findTeam(teamName: string): Team | undefined {
         for (const division of this.divisions) {
             const team = division.teams.find(team => team.name === teamName);
@@ -142,6 +138,12 @@ export class Tournament {
         } else {
             console.error("One or both teams not found.");
         }
+    }
+
+    public getTopTeamsByBullsEye(): Team[] {
+        const allTeams: Team[] = this.divisions.flatMap(division => division.teams);
+        const sortedTeams = allTeams.sort((a, b) => b.bullsEyeWins - a.bullsEyeWins);
+        return sortedTeams.slice(0, 16);
     }
 }
 
@@ -489,6 +491,17 @@ export class Tournament {
         divisions.REBELS,
         6,
         1,
+        "no entry",
+        "8:29pm"
+    );
+    tournament.addGameToRound(
+        3,
+        divisions.GAMBLERS,
+        17,
+        5,
+        divisions.GAME_OF_THRONES,
+        16,
+        3,
         "no entry",
         "8:29pm"
     );
