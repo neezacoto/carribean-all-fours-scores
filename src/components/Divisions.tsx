@@ -53,6 +53,7 @@ type DivisionsProps = {
 const columns: GridColDef[] = [
   { field: "id", headerName: "Rank", width: 70 },
   { field: "name", headerName: "Team Name", width: 150 },
+  { field: "teamWins", headerName: "Wins", width: 50 },
   { field: "bullsEyeWins", headerName: "Bulls Eye Wins", width: 130 },
   { field: "hangJackWins", headerName: "Hang Jack Wins", width: 130 },
   { field: "bullsEyeLosses", headerName: "Bulls Eye Losses", width: 130 },
@@ -75,6 +76,7 @@ function Divisions({ tournament }: DivisionsProps) {
   const topTeams = tournament.getTopTeamsByBullsEye().map((team, index) => ({
     id: index + 1,
     name: team.name,
+    teamWins: team.wins,
     bullsEyeWins: team.bullsEyeWins,
     hangJackWins: team.hangJackWins,
     bullsEyeLosses: team.bullsEyeLosses,
@@ -83,7 +85,7 @@ function Divisions({ tournament }: DivisionsProps) {
 
   return (
     <div>
-      <Box sx={{ height: 400, width: "100%", marginBottom: 4 }}>
+      <Box sx={{ height: 400, width: "100%", marginBottom: "4rem" }}>
         <Typography variant="h5" sx={{ marginBottom: 2 }}>
           Top 16 Teams
         </Typography>

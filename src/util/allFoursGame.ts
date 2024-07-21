@@ -29,6 +29,7 @@ class Team {
     bullsEyeLosses: number;
     hangJackWins: number;
     hangJackLosses: number;
+    wins: number;
 
     constructor(name: string) {
         // Initialize properties here
@@ -37,11 +38,14 @@ class Team {
         this.bullsEyeLosses = 0;
         this.hangJackWins = 0;
         this.hangJackLosses = 0;
+        this.wins = 0;
     }
 
     public addBullsEyes(won: number, lost: number) {
         this.bullsEyeWins += won;
         this.bullsEyeLosses += lost;
+        if(won === 17) 
+            this.wins++;
     }
 
     public addHangJacks(won: number, lost: number) {
@@ -140,11 +144,33 @@ export class Tournament {
         }
     }
 
+    /**
+     * Whoever has most amount of BE
+     * if BE tie, least amount of BE lost
+     * if another tie most wins
+     * if another tie most HJ
+     * if another tie least HJ lost
+     * 
+     */
     public getTopTeamsByBullsEye(): Team[] {
         const allTeams: Team[] = this.divisions.flatMap(division => division.teams);
-        const sortedTeams = allTeams.sort((a, b) => b.bullsEyeWins - a.bullsEyeWins);
+        const sortedTeams = allTeams.sort((a, b) => {
+            if (b.bullsEyeWins !== a.bullsEyeWins) {
+                return b.bullsEyeWins - a.bullsEyeWins;
+            } else if (a.bullsEyeLosses !== b.bullsEyeLosses) {
+                return a.bullsEyeLosses - b.bullsEyeLosses;
+            } else if ((b.bullsEyeWins + b.hangJackWins) !== (a.bullsEyeWins + a.hangJackWins)) {
+                return (b.bullsEyeWins + b.hangJackWins) - (a.bullsEyeWins + a.hangJackWins);
+            } else if (b.hangJackWins !== a.hangJackWins) {
+                return b.hangJackWins - a.hangJackWins;
+            } else {
+                return a.hangJackLosses - b.hangJackLosses;
+            }
+        });
         return sortedTeams.slice(0, 16);
     }
+    
+    
 }
 
   
