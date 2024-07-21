@@ -110,6 +110,7 @@ function Divisions({ tournament }: DivisionsProps) {
           slots={{ toolbar: CustomToolbar }}
         />
       </Box>
+      <Typography sx={{ marginBottom: 1, color: "gray" }}>Divisions</Typography>
       {tournament.divisions.map((division, index) => (
         <Accordion
           key={division.name}
