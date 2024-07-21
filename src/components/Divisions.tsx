@@ -8,8 +8,22 @@ import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import { Box, Divider, Paper } from "@mui/material";
 import { ExpandMore } from "@mui/icons-material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridColDef,
+  GridToolbar,
+  GridToolbarContainer,
+  GridToolbarExport,
+} from "@mui/x-data-grid";
 import { Tournament } from "../util/allFoursGame";
+
+function CustomToolbar() {
+  return (
+    <GridToolbarContainer>
+      <GridToolbarExport />
+    </GridToolbarContainer>
+  );
+}
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion {...props} />
@@ -89,7 +103,12 @@ function Divisions({ tournament }: DivisionsProps) {
         <Typography variant="h5" sx={{ marginBottom: 2 }}>
           Top 16 Teams
         </Typography>
-        <DataGrid rows={topTeams} columns={columns} hideFooter />
+        <DataGrid
+          rows={topTeams}
+          columns={columns}
+          hideFooter
+          slots={{ toolbar: CustomToolbar }}
+        />
       </Box>
       {tournament.divisions.map((division, index) => (
         <Accordion

@@ -24,6 +24,7 @@ const styles: { [key: string]: CSSProperties } = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "transparent",
   },
   navigation: {
     position: "fixed",
@@ -31,6 +32,7 @@ const styles: { [key: string]: CSSProperties } = {
     width: "100%",
     maxWidth: 500,
     padding: "1rem",
+    backgroundColor: "transparent",
   },
   content: {
     width: "100%",
@@ -46,8 +48,8 @@ function Home() {
   useEffect(() => {
     const tournamentSetup = setup();
     setTournament(tournamentSetup);
-    console.log("Tournament setup:", tournamentSetup);
-    console.log("Tournament setup:", tournamentSetup.getTopTeamsByBullsEye());
+    // console.log("Tournament setup:", tournamentSetup);
+    // console.log("Tournament setup:", tournamentSetup.getTopTeamsByBullsEye());
     setLoading(false); // Set loading to false after setup is complete
   }, []);
 

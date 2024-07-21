@@ -42,10 +42,10 @@ class Team {
     }
 
     public addBullsEyes(won: number, lost: number) {
+        if(won === 17) this.wins++;
         this.bullsEyeWins += won;
         this.bullsEyeLosses += lost;
-        if(won === 17) 
-            this.wins++;
+        
     }
 
     public addHangJacks(won: number, lost: number) {
@@ -167,7 +167,7 @@ export class Tournament {
                 return a.hangJackLosses - b.hangJackLosses;
             }
         });
-        return sortedTeams.slice(0, 16);
+        return sortedTeams;
     }
     
     
@@ -247,6 +247,17 @@ export class Tournament {
     // Add games to round 1
     tournament.addGameToRound(
         1,
+        divisions.GAME_OF_THRONES,
+        17,
+        5,
+        divisions.UNTOUCHABLES,
+        16,
+        7,
+        "11:00am",
+        "1:45am"
+    );
+    tournament.addGameToRound(
+        1,
         divisions.JUST_FOR_YOU,
         17,
         5,
@@ -266,6 +277,17 @@ export class Tournament {
         7,
         "no entry",
         "no entry"
+    );
+    tournament.addGameToRound(
+        1,
+        divisions.STRIKERS,
+        17,
+        6,
+        divisions.GUYANA,
+        12,
+        7,
+        "11:30am",
+        "12:50pm"
     );
     tournament.addGameToRound(
         1,
@@ -305,22 +327,11 @@ export class Tournament {
         divisions.ORIGINAL_EAGLES,
         17,
         4,
-        divisions.REBELS,
+        divisions.TRINI_REBELS,
         8,
         5,
         "no entry",
         "12:57pm"
-    );
-    tournament.addGameToRound(
-        1,
-        divisions.ORIGINAL_EAGLES,
-        17,
-        5,
-        divisions.REBELS,
-        16,
-        7,
-        "11:00am",
-        "1:45pm"
     );
     tournament.addGameToRound(
         1,
@@ -332,17 +343,6 @@ export class Tournament {
         2,
         "11:00am",
         "1:37pm"
-    );
-    tournament.addGameToRound(
-        2,
-        divisions.STRIKERS,
-        17,
-        6,
-        divisions.GUYANA,
-        12,
-        7,
-        "11:30am",
-        "12:50pm"
     );
     tournament.addGameToRound(
         2,
@@ -371,7 +371,7 @@ export class Tournament {
         divisions.GAME_OF_THRONES,
         17,
         3,
-        divisions.UNTOUCHABLES,
+        divisions.JUST_FOR_YOU,
         9,
         1,
         "3:05pm",
@@ -393,7 +393,7 @@ export class Tournament {
         divisions.SOCOSA,
         17,
         3,
-        divisions.REBELS,
+        divisions.TRINI_REBELS,
         6,
         1,
         "3:00pm",
@@ -427,10 +427,21 @@ export class Tournament {
         17,
         7,
         divisions.NEW_JERSEY_UNITED,
-        13,
-        0,
+        11,
+        6,
         "no entry",
         "no entry"
+    );
+    tournament.addGameToRound(
+        2,
+        divisions.STRIKERS,
+        17,
+        4,
+        divisions.AIR_FORCE_ONE,
+        9,
+        1,
+        "3:00pm",
+        "5:58pm"
     );
     tournament.addGameToRound(
         3,
@@ -514,7 +525,7 @@ export class Tournament {
         divisions.BLACK_EAGLES,
         17,
         3,
-        divisions.REBELS,
+        divisions.TRINI_REBELS,
         6,
         1,
         "no entry",
