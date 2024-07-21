@@ -4,7 +4,7 @@ type TeamEntry = {
     hangJacks: number;
   };
   
-  class Game {
+  export class Game {
     teamA: TeamEntry;
     teamB: TeamEntry;
     start: string;

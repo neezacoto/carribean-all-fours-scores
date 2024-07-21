@@ -8,6 +8,7 @@ import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import { ExpandMore } from "@mui/icons-material";
 import { Tournament } from "../util/allFoursGame";
+import { Box, Divider, Paper } from "@mui/material";
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion {...props} />
@@ -89,10 +90,22 @@ function Divisions({ tournament }: DivisionsProps) {
                   <Typography>{team.name}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Typography>
-                    BullsEye Wins: {team.bullsEyeWins} | BullsEye Losses:{" "}
-                    {team.bullsEyeLosses}
-                  </Typography>
+                  <Box>
+                    <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                      Won
+                    </Typography>
+                    <Divider sx={{ marginBottom: 1 }} />
+                    <Typography>Bulls Eye: {team.bullsEyeWins}</Typography>
+                    <Typography>Hang Jack: {team.hangJackWins}</Typography>
+                  </Box>
+                  <Box sx={{ marginTop: 2 }}>
+                    <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                      Lost
+                    </Typography>
+                    <Divider sx={{ marginBottom: 1 }} />
+                    <Typography>Bulls Eye: {team.bullsEyeLosses}</Typography>
+                    <Typography>Hang Jack: {team.hangJackLosses}</Typography>
+                  </Box>
                 </AccordionDetails>
               </Accordion>
             ))}

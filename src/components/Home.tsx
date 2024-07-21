@@ -69,7 +69,7 @@ function Home() {
           justifyContent="center"
         >
           {screen === "divisions" && <Divisions tournament={tournament} />}
-          {screen === "games" && <Games />}
+          {screen === "games" && <Games tournament={tournament} />}
         </Grid>
         <Grid item xs={1} style={styles.navContainer}>
           <BottomNavigation
