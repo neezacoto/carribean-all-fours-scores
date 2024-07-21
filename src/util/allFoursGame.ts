@@ -225,8 +225,8 @@ export class Tournament {
         divisions.CARIB,
         15,
         4,
-        "11:05AM",
-        "1:35PM"
+        "11:05am",
+        "1:35pm"
     );
     tournament.addGameToRound(
         1,
@@ -234,10 +234,98 @@ export class Tournament {
         17,
         7,
         divisions.NEW_JERSEY_UNITED,
+        13,
+        7,
+        "no entry",
+        "no entry"
+    );
+    tournament.addGameToRound(
+        1,
+        divisions.NEW_MILLENNIUM,
+        17,
+        2,
+        divisions.WHY_WORRY,
         15,
         4,
-        "11:05AM",
-        "1:35PM"
+        "no entry",
+        "no entry"
+    );
+    tournament.addGameToRound(
+        1,
+        divisions.UNITY,
+        17,
+        4,
+        divisions.MONTREAL,
+        8,
+        0,
+        "no entry",
+        "1:14pm"
+    );
+    tournament.addGameToRound(
+        1,
+        divisions.GAMBLERS,
+        13,
+        2,
+        divisions.RAIDERS,
+        17,
+        6,
+        "11:00am",
+        "no entry"
+    );
+    tournament.addGameToRound(
+        1,
+        divisions.ORIGINAL_EAGLES,
+        17,
+        4,
+        divisions.REBELS,
+        8,
+        5,
+        "no entry",
+        "12:57pm"
+    );
+    tournament.addGameToRound(
+        1,
+        divisions.ORIGINAL_EAGLES,
+        17,
+        5,
+        divisions.REBELS,
+        16,
+        7,
+        "11:00am",
+        "1:45pm"
+    );
+    tournament.addGameToRound(
+        1,
+        divisions.SOCOSA,
+        17,
+        4,
+        divisions.BLACK_EAGLES,
+        10,
+        2,
+        "11:00am",
+        "1:37pm"
+    );
+    tournament.addGameToRound(
+        1,
+        divisions.STRIKERS,
+        17,
+        6,
+        divisions.GUYANA,
+        12,
+        7,
+        "11:30am",
+        "12:50pm"
+    );
+    tournament.addGameToRound(
+        2,
+        divisions.STRIKERS,
+        17,
+        4,
+        divisions.AIR_FORCE_ONE,
+        9,
+        1,
+        "3:00pm",
+        "5:58pm"
     );
 
     return tournament;
