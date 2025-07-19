@@ -15,12 +15,14 @@ import {
   GridToolbarContainer,
   GridToolbarExport,
 } from "@mui/x-data-grid";
-import { Tournament } from "../util/allFoursGame";
+import { Tournament } from "../util/allFoursGame2025";
 
 function CustomToolbar() {
   return (
     <GridToolbarContainer>
-      <GridToolbarExport />
+      <GridToolbarExport
+        csvOptions={{ fileName: "Unity_Sports_All_Fours_Tournement_2025" }}
+      />
     </GridToolbarContainer>
   );
 }

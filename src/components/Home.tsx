@@ -2,41 +2,38 @@ import React, { useState, useEffect, CSSProperties } from "react";
 import {
   BottomNavigation,
   BottomNavigationAction,
-  Container,
-  Grid,
   CircularProgress,
 } from "@mui/material";
 import GroupsIcon from "@mui/icons-material/Groups";
 import ViewDayIcon from "@mui/icons-material/ViewDay";
 import Divisions from "./Divisions";
 import Games from "./Games";
-import { setup } from "../util/allFoursGame";
+import { setup } from "../util/allFoursGame2025";
 
 const styles: { [key: string]: CSSProperties } = {
-  container: {
+  root: {
+    height: "100vh",
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    height: "100vh",
-  },
-  navContainer: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "transparent",
-  },
-  navigation: {
-    position: "fixed",
-    bottom: 0,
-    width: "100%",
-    maxWidth: 500,
-    padding: "1rem",
-    backgroundColor: "transparent",
   },
   content: {
-    width: "100%",
-    height: "100%",
+    flex: "1 1 auto",
+    overflowY: "auto",
+    padding: "1rem",
+    paddingBottom: "72px", // Extra space for the fixed navigation
+  },
+  navWrapper: {
+    position: "fixed",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: "white",
+    borderTop: "1px solid rgba(0, 0, 0, 0.12)",
+    zIndex: 1100, // Ensure nav is on top
+  },
+  navigation: {
+    maxWidth: 500,
+    margin: "auto",
   },
 };
 
@@ -55,48 +52,46 @@ function Home() {
 
   if (loading) {
     return (
-      <Container style={styles.container}>
+      <div
+        style={{
+          ...styles.root,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <CircularProgress />
-      </Container>
+      </div>
     );
   }
 
   return (
-    <Container style={styles.container}>
-      <Grid container direction="column" style={styles.content}>
-        <Grid
-          item
-          xs={11}
-          container
-          alignItems="center"
-          justifyContent="center"
+    <div style={styles.root}>
+      <div style={styles.content}>
+        {screen === "divisions" && <Divisions tournament={tournament} />}
+        {screen === "games" && <Games tournament={tournament} />}
+      </div>
+      <div style={styles.navWrapper}>
+        <BottomNavigation
+          showLabels
+          value={screen}
+          onChange={(event, newValue) => {
+            setScreen(newValue);
+          }}
+          style={styles.navigation}
         >
-          {screen === "divisions" && <Divisions tournament={tournament} />}
-          {screen === "games" && <Games tournament={tournament} />}
-        </Grid>
-        <Grid item xs={1} style={styles.navContainer}>
-          <BottomNavigation
-            showLabels
-            value={screen}
-            onChange={(event, newValue) => {
-              setScreen(newValue);
-            }}
-            style={styles.navigation}
-          >
-            <BottomNavigationAction
-              label="Divisions"
-              icon={<GroupsIcon />}
-              value="divisions"
-            />
-            <BottomNavigationAction
-              label="Games"
-              icon={<ViewDayIcon />}
-              value="games"
-            />
-          </BottomNavigation>
-        </Grid>
-      </Grid>
-    </Container>
+          <BottomNavigationAction
+            label="Divisions"
+            icon={<GroupsIcon />}
+            value="divisions"
+          />
+          <BottomNavigationAction
+            label="Games"
+            icon={<ViewDayIcon />}
+            value="games"
+          />
+        </BottomNavigation>
+      </div>
+    </div>
   );
 }
 
