@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/carribean-all-fours-scores/static/css/main.e6c13ad2.css",
+    "main.js": "/carribean-all-fours-scores/static/js/main.ab9cf658.js",
+    "static/js/453.f6de8d79.chunk.js": "/carribean-all-fours-scores/static/js/453.f6de8d79.chunk.js",
+    "index.html": "/carribean-all-fours-scores/index.html",
+    "main.e6c13ad2.css.map": "/carribean-all-fours-scores/static/css/main.e6c13ad2.css.map",
+    "main.ab9cf658.js.map": "/carribean-all-fours-scores/static/js/main.ab9cf658.js.map",
+    "453.f6de8d79.chunk.js.map": "/carribean-all-fours-scores/static/js/453.f6de8d79.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.ab9cf658.js"
+  ]
+}
