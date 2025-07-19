@@ -197,7 +197,7 @@ export class Tournament {
   
   enum Philip {
     WHY_WORRY = "WHY WORRY",
-    JAGUARS = "JAGUARS",
+    GUYANA_JAGUARS = "GUYANA JAGUARS",
     RAIDERS = "RAIDERS",
     JUST_4_YOU = "JUST 4 YOU",
   }
@@ -281,7 +281,7 @@ export class Tournament {
     );
     tournament.addGameToRound(
         1,
-        divisions.GUYANA,
+        divisions.GUYANA_JAGUARS,
         18,
         3,
         divisions.WHY_WORRY,
