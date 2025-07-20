@@ -127,14 +127,14 @@ export class Tournament {
         return [this.roundOne, this.roundTwo, this.roundThree];
     }
 
-    public findTeam(teamName: string): Team | undefined {
+    public findTeam(teamName: string): Team {
         for (const division of this.divisions) {
             const team = division.teams.find(team => team.name === teamName);
             if (team) {
                 return team;
             }
         }
-        return undefined;
+        throw new Error(`Team "${teamName}" not found in any division.`);
     }
 
     public addBuyRound(
@@ -325,7 +325,7 @@ export class Tournament {
     // );
     tournament.addGameToRound(
         1,
-        divisions.MARYLAND,
+        divisions.MARYLAND_OUTSIDERS,
         18,
         4,
         divisions.JB_GAMBLERS,
@@ -356,6 +356,18 @@ export class Tournament {
         "no entry",
         "1:00pm"
     );
+    tournament.addGameToRound(
+        1,
+        divisions.NEW_JERSEY_UNITED,
+        18,
+        9,
+        divisions.TRINI_REBELS,
+        4,
+        1,
+        "no entry",
+        "1:00pm"
+    );
+
     tournament.addGameToRound(
         1,
         divisions.GUYANA_JAGUARS,
@@ -424,6 +436,18 @@ export class Tournament {
     );
     tournament.addGameToRound(
         2,
+        divisions.GAME_OF_THRONES,
+        18,
+        5,
+        divisions.TRINI_REBELS,
+        13,
+        5,
+        "4:00pm",
+        "6:30pm"
+    );
+
+    tournament.addGameToRound(
+        2,
         divisions.STRIKERS,
         18,
         9,
@@ -478,6 +502,7 @@ export class Tournament {
         "4:00pm",
         "7:26pm"
     );
+    
 
     tournament.addBuyRound(
         3,
@@ -486,6 +511,96 @@ export class Tournament {
         [10, 13],
         [4, 5],
         "no entry",
+        "no entry"
+    );
+
+    tournament.addGameToRound(
+        3,
+        divisions.GUYANA_JAGUARS,
+        18,
+        8,
+        divisions.RAIDERS,
+        11,
+        2,
+        "7:30pm",
+        "9:28pm"
+    );
+    tournament.addGameToRound(
+        3,
+        divisions.NEW_MILLENNIUM,
+        18,
+        7,
+        divisions.TRINI_REBELS,
+        10,
+        5,
+        "7:30pm",
+        "no entry"
+    );
+    tournament.addGameToRound(
+        3,
+        divisions.MARYLAND_OUTSIDERS,
+        18,
+        5,
+        divisions.UNITY,
+        10,
+        4,
+        "7:00pm",
+        "10:14pm"
+    );
+    tournament.addGameToRound(
+        3,
+        divisions.GAME_OF_THRONES,
+        18,
+        6,
+        divisions.NEW_JERSEY_UNITED,
+        11,
+        4,
+        "7:00pm",
+        "no entry"
+    );
+    tournament.addGameToRound(
+        3,
+        divisions.BLACK_EAGLES,
+        18,
+        8,
+        divisions.JB_GAMBLERS,
+        11,
+        10,
+        "7:00pm",
+        "10:17pm"
+    );
+    tournament.addGameToRound(
+        3,
+        divisions.SACOSAH,
+        18,
+        4,
+        divisions.ORIGINAL_EAGLES,
+        17,
+        7,
+        "7:00pm",
+        "no entry"
+    );
+    
+    tournament.addGameToRound(
+        3,
+        divisions.PHOENIX,
+        18,
+        7,
+        divisions.BOSTON,
+        13,
+        3,
+        "7:00pm",
+        "no entry"
+    );
+    tournament.addGameToRound(
+        3,
+        divisions.SACOSAH,
+        18,
+        4,
+        divisions.ORIGINAL_EAGLES,
+        17,
+        7,
+        "5:30pm",
         "no entry"
     );
     
