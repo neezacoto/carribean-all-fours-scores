@@ -7,7 +7,7 @@ import MuiAccordionSummary, {
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import { Typography, Paper, Box, Button, Divider } from "@mui/material";
 import { ExpandMore } from "@mui/icons-material";
-import { Tournament } from "../util/allFoursGame2025";
+import { Tournament, Game, Buy } from "../util/allFoursGame2025";
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion {...props} />
@@ -98,47 +98,114 @@ function Games({ tournament }: GamesProps) {
             </AccordionSummary>
             <AccordionDetails>
               {round.length > 0 ? (
-                round.map((game, gameIndex) => (
-                  <GamePaper key={`${roundIndex}-${gameIndex}`}>
-                    <Typography variant="h6" component="div" gutterBottom>
-                      <Box fontWeight="fontWeightBold">
-                        {game.teamA.team.name} vs {game.teamB.team.name}
-                      </Box>
-                    </Typography>
-                    <Divider />
-                    <Typography variant="body1" style={{ marginTop: ".5rem" }}>
-                      <Box fontWeight="fontWeightBold" display="inline">
-                        {game.teamA.team.name}
-                      </Box>
-                      <Typography>Bulls Eye: {game.teamA.bullsEye}</Typography>
-                      <Typography>
-                        Hang Jacks: {game.teamA.hangJacks}
-                      </Typography>
-                    </Typography>
-                    <Typography style={{ marginTop: ".5rem" }} variant="body1">
-                      <Box fontWeight="fontWeightBold" display="inline">
-                        {game.teamB.team.name}
-                      </Box>
-                      <Typography>Bulls Eye: {game.teamB.bullsEye}</Typography>
-                      <Typography>
-                        Hang Jacks: {game.teamB.hangJacks}{" "}
-                      </Typography>
-                    </Typography>
-                    <Box
-                      style={{
-                        display: "flex",
-                        gap: "1rem",
-                        color: "lightgray",
-                        marginTop: "1rem",
-                      }}
-                    >
-                      <Typography variant="body2">
-                        Start: {game.start}
-                      </Typography>
-                      <Typography variant="body2">End: {game.end}</Typography>
-                    </Box>
-                  </GamePaper>
-                ))
+                round.map((game, gameIndex) => {
+                  const isBuy = "buy" in game;
+                  if (isBuy) {
+                    const buyGame = game as Buy;
+                    return (
+                      <GamePaper key={`${roundIndex}-${gameIndex}`}>
+                        <Typography variant="h6" component="div" gutterBottom>
+                          <Box fontWeight="fontWeightBold">
+                            {buyGame.teamA.team.name} (BUY ROUND)
+                          </Box>
+                        </Typography>
+                        <Divider />
+                        <Typography
+                          variant="body1"
+                          style={{ marginTop: ".5rem" }}
+                        >
+                          <Box fontWeight="fontWeightBold" display="inline">
+                            {buyGame.teamA.team.name}
+                          </Box>
+                          <Typography>
+                            Bulls Eye Won: {buyGame.teamA.bullsEye}
+                          </Typography>
+                          <Typography>
+                            Hang Jacks Won: {buyGame.teamA.hangJacks}
+                          </Typography>
+                          <Divider sx={{ my: 1 }} />
+                          <Typography>
+                            Bulls Eye Lost: {buyGame.buy.bullsEye}
+                          </Typography>
+                          <Typography>
+                            Hang Jacks Lost: {buyGame.buy.hangJacks}
+                          </Typography>
+                        </Typography>
+                        <Box
+                          style={{
+                            display: "flex",
+                            gap: "1rem",
+                            color: "lightgray",
+                            marginTop: "1rem",
+                          }}
+                        >
+                          <Typography variant="body2">
+                            Start: {buyGame.start}
+                          </Typography>
+                          <Typography variant="body2">
+                            End: {buyGame.end}
+                          </Typography>
+                        </Box>
+                      </GamePaper>
+                    );
+                  } else {
+                    const regularGame = game as Game;
+                    return (
+                      <GamePaper key={`${roundIndex}-${gameIndex}`}>
+                        <Typography variant="h6" component="div" gutterBottom>
+                          <Box fontWeight="fontWeightBold">
+                            {regularGame.teamA.team.name} vs{" "}
+                            {regularGame.teamB.team.name}
+                          </Box>
+                        </Typography>
+                        <Divider />
+                        <Typography
+                          variant="body1"
+                          style={{ marginTop: ".5rem" }}
+                        >
+                          <Box fontWeight="fontWeightBold" display="inline">
+                            {regularGame.teamA.team.name}
+                          </Box>
+                          <Typography>
+                            Bulls Eye: {regularGame.teamA.bullsEye}
+                          </Typography>
+                          <Typography>
+                            Hang Jacks: {regularGame.teamA.hangJacks}
+                          </Typography>
+                        </Typography>
+                        <Typography
+                          style={{ marginTop: ".5rem" }}
+                          variant="body1"
+                        >
+                          <Box fontWeight="fontWeightBold" display="inline">
+                            {regularGame.teamB.team.name}
+                          </Box>
+                          <Typography>
+                            Bulls Eye: {regularGame.teamB.bullsEye}
+                          </Typography>
+                          <Typography>
+                            Hang Jacks: {regularGame.teamB.hangJacks}{" "}
+                          </Typography>
+                        </Typography>
+                        <Box
+                          style={{
+                            display: "flex",
+                            gap: "1rem",
+                            color: "lightgray",
+                            marginTop: "1rem",
+                          }}
+                        >
+                          <Typography variant="body2">
+                            Start: {regularGame.start}
+                          </Typography>
+                          <Typography variant="body2">
+                            End: {regularGame.end}
+                          </Typography>
+                        </Box>
+                      </GamePaper>
+                    );
+                  }
+                })
               ) : (
                 <Typography variant="body2" color="textSecondary">
                   There are no games yet

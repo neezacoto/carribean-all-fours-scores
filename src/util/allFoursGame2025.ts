@@ -15,11 +15,34 @@ export class Game {
         this.start = start;
         this.end = end;
 
+        if (teamA.bullsEye > teamB.bullsEye) {
+            teamA.team.addWin();
+        } else if (teamB.bullsEye > teamA.bullsEye) {
+            teamB.team.addWin();
+        }
+
         teamA.team.addBullsEyes(teamA.bullsEye, teamB.bullsEye);
         teamA.team.addHangJacks(teamA.hangJacks, teamB.hangJacks);
 
         teamB.team.addBullsEyes(teamB.bullsEye, teamA.bullsEye);
         teamB.team.addHangJacks(teamB.hangJacks, teamA.hangJacks);
+    }
+}
+export class Buy {
+    teamA: TeamEntry;
+    buy: {bullsEye: number; hangJacks: number };
+    start: string;
+    end: string;
+    constructor(teamA: TeamEntry, buy: {bullsEye: number; hangJacks: number }, start: string, end: string) {
+        this.teamA = teamA;
+        this.buy = buy;
+        this.start = start;
+        this.end = end;
+
+        teamA.team.addWin();
+        teamA.team.addBuy();
+        teamA.team.addBullsEyes(teamA.bullsEye, buy.bullsEye);
+        teamA.team.addHangJacks(teamA.hangJacks, buy.hangJacks);
     }
 }
 
@@ -30,6 +53,7 @@ class Team {
     hangJackWins: number;
     hangJackLosses: number;
     wins: number;
+    buys: number;
 
     constructor(name: string) {
         // Initialize properties here
@@ -39,10 +63,10 @@ class Team {
         this.hangJackWins = 0;
         this.hangJackLosses = 0;
         this.wins = 0;
+        this.buys = 0;
     }
 
     public addBullsEyes(won: number, lost: number) {
-        if(won === 17) this.wins++;
         this.bullsEyeWins += won;
         this.bullsEyeLosses += lost;
         
@@ -51,6 +75,14 @@ class Team {
     public addHangJacks(won: number, lost: number) {
         this.hangJackWins += won;
         this.hangJackLosses += lost;
+    }
+
+    public addWin() {
+        this.wins++;
+    }
+
+    public addBuy() {
+        this.buys++;
     }
 }
 
@@ -71,9 +103,9 @@ class Division {
 type Round = 1 | 2 | 3;
 
 export class Tournament {
-    roundOne: Game[];
-    roundTwo: Game[];
-    roundThree: Game[];
+    roundOne: (Game | Buy)[];
+    roundTwo: (Game | Buy)[];
+    roundThree: (Game | Buy)[];
     divisions: Division[];
 
     constructor() {
@@ -103,6 +135,43 @@ export class Tournament {
             }
         }
         return undefined;
+    }
+
+    public addBuyRound(
+        round: Round,
+        teamAName: string,
+        avgHJW: number [],
+        avgBEL: number [],
+        avgHJL: number [],
+        start: string,
+        end: string
+    ) {
+        const teamA = this.findTeam(teamAName);
+        console.log(teamAName)
+
+
+        if (teamA) {
+            const buy = new Buy(
+                { team: teamA, bullsEye: 18, hangJacks: averageFloor(...avgHJW) },
+                { bullsEye: averageFloor(...avgBEL), hangJacks: averageFloor(...avgHJL) },
+                start,
+                end
+            );
+
+            switch (round) {
+                case 1:
+                    this.roundOne.push(buy);
+                    break;
+                case 2:
+                    this.roundTwo.push(buy);
+                    break;
+                case 3:
+                    this.roundThree.push(buy);
+                    break;
+            }
+        } else {
+            console.error("One or both teams not found.");
+        }
     }
 
     public addGameToRound(
@@ -178,7 +247,7 @@ export class Tournament {
     BOSTON = "BOSTON",
     STRIKERS = "STRIKERS",
     ORIGINAL_EAGLES = "ORIGINAL EAGLES",
-    PHEONIX = "PHOENIX",
+    PHOENIX = "PHOENIX",
   }
   
   enum Clouden {
@@ -191,7 +260,7 @@ export class Tournament {
   enum Eccles {
     BLACK_EAGLES = "BLACK EAGLES",
     UNITY = "UNITY",
-    MARYLAND = "MARYLAND",
+    MARYLAND_OUTSIDERS = "MARYLAND OUTSIDERS",
     JB_GAMBLERS = "JB GAMBLERS"
   }
   
@@ -203,7 +272,15 @@ export class Tournament {
   }
 
 
-  const allEnums = [Superville, Clouden, Eccles, Philip];
+  // Utility function to calculate the floored average of numbers
+    function averageFloor(...nums: number[]): number {
+        if (nums.length === 0) return 0;
+        const sum = nums.reduce((acc, n) => acc + n, 0);
+        return Math.floor(sum / nums.length);
+    }
+
+
+  const allEnums = [Superville, Clouden, Eccles, Philip, Buy];
 
   const divisions = allEnums.reduce((acc, currentEnum) => {
       Object.keys(currentEnum).forEach(key => {
@@ -323,6 +400,96 @@ export class Tournament {
         "11:00am",
         "no entry"
     );
+    tournament.addGameToRound(
+        2,
+        divisions.ORIGINAL_EAGLES,
+        18,
+        4,
+        divisions.PHOENIX,
+        11,
+        2,
+        "4:00pm",
+        "6:27pm"
+    );
+    tournament.addGameToRound(
+        2,
+        divisions.JUST_4_YOU,
+        18,
+        9,
+        divisions.GUYANA_JAGUARS,
+        14,
+        3,
+        "4:00pm",
+        "6:30pm"
+    );
+    tournament.addGameToRound(
+        2,
+        divisions.STRIKERS,
+        18,
+        9,
+        divisions.BOSTON,
+        13,
+        5,
+        "4:10pm",
+        "6:30pm"
+    );
+    tournament.addGameToRound(
+        2,
+        divisions.JB_GAMBLERS,
+        18,
+        3,
+        divisions.UNITY,
+        10,
+        4,
+        "4:00pm",
+        "no entry"
+    );
+    tournament.addGameToRound(
+        2,
+        divisions.RAIDERS,
+        18,
+        5,
+        divisions.WHY_WORRY,
+        17,
+        7,
+        "4:00pm",
+        "6:45pm"
+    );
+    tournament.addGameToRound(
+        2,
+        divisions.NEW_MILLENNIUM,
+        18,
+        8,
+        divisions.NEW_JERSEY_UNITED,
+        16,
+        7,
+        "4:00pm",
+        "no entry"
+    );
+    
+    tournament.addGameToRound(
+        2,
+        divisions.MARYLAND_OUTSIDERS,
+        18,
+        7,
+        divisions.BLACK_EAGLES,
+        17,
+        4,
+        "4:00pm",
+        "7:26pm"
+    );
+
+    tournament.addBuyRound(
+        3,
+        divisions.STRIKERS,
+        [6, 9],
+        [10, 13],
+        [4, 5],
+        "no entry",
+        "no entry"
+    );
+    
+    
     
 
     return tournament;

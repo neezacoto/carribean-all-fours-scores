@@ -70,10 +70,11 @@ const columns: GridColDef[] = [
   { field: "id", headerName: "Rank", width: 70 },
   { field: "name", headerName: "Team Name", width: 150 },
   { field: "teamWins", headerName: "Wins", width: 50 },
-  { field: "bullsEyeWins", headerName: "Bulls Eye Wins", width: 130 },
-  { field: "hangJackWins", headerName: "Hang Jack Wins", width: 130 },
-  { field: "bullsEyeLosses", headerName: "Bulls Eye Losses", width: 130 },
-  { field: "hangJackLosses", headerName: "Hang Jack Losses", width: 130 },
+  { field: "buys", headerName: "Buys", width: 50 },
+  { field: "bullsEyeWins", headerName: "B.E Won", width: 130 },
+  { field: "hangJackWins", headerName: "H.J Won", width: 130 },
+  { field: "bullsEyeLosses", headerName: "B.E Lost", width: 130 },
+  { field: "hangJackLosses", headerName: "H.J Lost", width: 130 },
 ];
 
 function Divisions({ tournament }: DivisionsProps) {
@@ -93,6 +94,7 @@ function Divisions({ tournament }: DivisionsProps) {
     id: index + 1,
     name: team.name,
     teamWins: team.wins,
+    buys: team.buys,
     bullsEyeWins: team.bullsEyeWins,
     hangJackWins: team.hangJackWins,
     bullsEyeLosses: team.bullsEyeLosses,
